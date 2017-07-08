@@ -4,7 +4,8 @@
 <body>
 <h1> {{title}} is working</h1>
 {% for k in object_list %}
-{{k.title}}</br>
+{% url "posts:detail" id=k.id %}
+<a href='{{ k.get_absolute_url }}'>{{k.title}}</a></br>
 {{k.content}}</br>
 {{k.timestamp}}</br>
 {{k.updated}}</br>
