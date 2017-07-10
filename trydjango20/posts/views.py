@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 from .forms import PostForm 
+from django.contrib import messages
 # Create your views here.
 def post_list(request):
 	queryset = Post.objects.all()
@@ -16,6 +17,7 @@ def post_create(request):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
+		messages.success(request, 'Profile details updated.')
 		return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
 		"form": form,
@@ -35,6 +37,7 @@ def post_update(request, id=None):
 	if form.is_valid():
 		instance = form.save(commit=False)
 		instance.save()
+		messages.success(request, "<a href='#'>Item</a> saved", extra_tags='html_safe')
 		return HttpResponseRedirect(instance.get_absolute_url())
 	context = {
 		"form": form,
