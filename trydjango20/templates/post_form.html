@@ -1,14 +1,13 @@
-<!--DOCTYPE html -->
-<html>
+{% extends "base.html" %}
+<title>{% block head_title %}{{instance.title}} | {{block.super }}{% endblock head_title %}</title> 
 
-<body>
+{% block content %}
+{{block.supper}}
 
+    <h1>form byamba</h1>
 
-
-<form method='POST' action=''>{% csrf_token %}
-{{ form.as_p }}
-<input type='submit' value='Create Post'>
-</form>
-</body>
-
-</html>
+    <form method='POST' action=''> {% csrf_token %}
+      {{form.as_p}}
+      <input type='submit' value='Create Post'/>
+    </form>
+{% endblock content %}
