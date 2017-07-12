@@ -3,12 +3,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm 
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 def post_list(request):
-	queryset = Post.objects.all()
+	queryset_list = Post.objects.all() #.order_by("-timestamp")
+	paginator = Paginator(queryset_list, 10)
+	page_request_var = "page"
+	page = request.Get.get(page_request_var)
+	try: 
+		queryset_list=paginator.page(page)
+	except PageNotAnInteger:
+		queryset = paginator.page(1)
+	except EmptyPage:
+		queryset=paginator.page(paginator.num_pages)
 	context = {
 		"object_list": queryset,
-		"title": "List"
+		"title": "List",
+		"page_request_var": page_request_var
 	}
 	
 	return render(request, "post_list.html", context)
